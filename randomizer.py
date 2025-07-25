@@ -56,9 +56,39 @@ def handle_init(args):
     
     print(f"Created {len(CLAN_POOL)*2} files for tracking secondary clans")
 
+def handle_mark_done(args):
+    primary = args.primary_clan
+    secondary = args.secondary_clan
+
+    # select clan pool file
+    out_dir = Path("mt2_randomizer_data")
+    file = out_dir / f"{primary}_pool.txt"
+
+    edit_file_line(file, secondary, f"{secondary} (Done)")
+
+def edit_file_line(filepath, prefix, replacement):
+    path = Path(filepath)
+    
+    # Read all lines
+    with path.open("r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    # Modify matching line
+    for i, line in enumerate(lines):
+        if line.startswith(prefix):
+            lines[i] = replacement + "\n"  # ensure newline
+            break  # stop after first match (remove if you want all matches)
+
+    # Write the updated lines back
+    with path.open("w", encoding="utf-8") as f:
+        f.writelines(lines)
+
 def main():
     parser = argparse.ArgumentParser(prog="randomizer", description="Monster Train 2 Clan Randomizer")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    init_files = subparsers.add_parser("init", help="Initialize the MT2 clan tracker files")
+    init_files.set_defaults(func=handle_init)
 
     randomize_parser = subparsers.add_parser("randomize", help="Randomly choose a secondary clan")
     randomize_parser.add_argument(
@@ -68,8 +98,18 @@ def main():
     )
     randomize_parser.set_defaults(func=handle_randomize_clan)
 
-    init_files = subparsers.add_parser("init", help="Initialize the MT2 clan tracker files")
-    init_files.set_defaults(func=handle_init)
+    mark_done = subparsers.add_parser("mark", help="Mark a clan combo as completed")
+    mark_done.add_argument(
+        "--primary-clan",
+        required=True,
+        help="Specify primary clan in combo"
+    )
+    mark_done.add_argument(
+        "--secondary-clan",
+        required=True,
+        help="Specify secondary clan in combo"
+    )
+    mark_done.set_defaults(func=handle_mark_done)
 
     args = parser.parse_args()
     args.func(args)
