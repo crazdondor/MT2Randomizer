@@ -1,6 +1,6 @@
 # MT2Randomizer
 
-A simple CLI tool for choosing random clan combinations in Monster Train 2
+A simple CLI tool for choosing random clan combinations in Monster Train 2\n
 I made this because I prefer playing with random clan combos, but I still want to work towards completion of all combos. This allows for picking out of a select pool, and marking combos as done
 
 ## Usage
@@ -18,7 +18,7 @@ python .\randomizer.py init
 ### Randomize
 Randomizes based on specified primary clan or full random
 #### Examples
-python .\randomizer.py randomize -p "Lazarus League"
+python .\randomizer.py randomize -p "Lazarus League"\n
 python .\randomizer.py randomize
 #### Arguments
 ##### --primary-clan OR -p
