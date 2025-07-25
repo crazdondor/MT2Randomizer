@@ -1,0 +1,66 @@
+import argparse
+import random
+import sys
+
+from pathlib import Path
+
+# Secondary clan pool — customize as you like
+CLAN_POOL = [
+    "Banished",
+    "Pyreborne",
+    "Luna Coven",
+    "Underlegion",
+    "Lazarus League",
+    "Hellhorned",
+    "Awoken",
+    "Stygian Guard",
+    "Umbra",
+    "Melting Remnant"
+]
+
+def handle_randomize_clan(args):
+    # Pick a random secondary clan
+    primary_clan = args.primary_clan
+    pool = [clan for clan in CLAN_POOL if clan != primary_clan]
+    if not pool:
+        print("No valid secondary clans")
+        sys.exit(1)
+    secondary = random.choice(pool)
+    print(f"Your combo: {primary_clan} + {secondary}")
+
+def handle_init(args):
+    # should create a folder structure at ./clan-combos. one file for each primary clan listing possible secondaries
+    out_dir = Path("mt2_randomizer_data")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # create each clan file
+    for clan in CLAN_POOL:
+        out_file = out_dir / f"{clan}_pool.txt"
+        with out_file.open("w", encoding="utf-8") as f:
+            pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
+            for secondary in pool:
+                f.write(secondary + "\n")
+                f.write(secondary + "-Alternate\n")
+    
+    print(f"Created {len(CLAN_POOL)} files for tracking secondary clans")
+
+def main():
+    parser = argparse.ArgumentParser(prog="randomizer", description="Monster Train 2 Clan Randomizer")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    randomize_parser = subparsers.add_parser("randomize", help="Randomly choose a secondary clan")
+    randomize_parser.add_argument(
+        "--primary-clan",
+        required=True,
+        help="Specify the primary clan (will be excluded from pool)"
+    )
+    randomize_parser.set_defaults(func=handle_randomize_clan)
+
+    init_files = subparsers.add_parser("init", help="Initialize the MT2 clan tracker files")
+    init_files.set_defaults(func=handle_init)
+
+    args = parser.parse_args()
+    args.func(args)
+
+if __name__ == "__main__":
+    main()
