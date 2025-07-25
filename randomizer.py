@@ -21,7 +21,13 @@ CLAN_POOL = [
 def handle_randomize_clan(args):
     # Pick a random secondary clan
     primary_clan = args.primary_clan
-    pool = [clan for clan in CLAN_POOL if clan != primary_clan]
+
+    # select clan pool file
+    out_dir = Path("mt2_randomizer_data")
+    file = out_dir / f"{primary_clan}_pool.txt"
+    with open(file, "r", encoding="utf-8") as f:
+        pool = [line.strip() for line in f]
+
     if not pool:
         print("No valid secondary clans")
         sys.exit(1)
@@ -36,13 +42,19 @@ def handle_init(args):
     # create each clan file
     for clan in CLAN_POOL:
         out_file = out_dir / f"{clan}_pool.txt"
+        out_file_alt = out_dir / f"{clan}_Alternate_pool.txt"
         with out_file.open("w", encoding="utf-8") as f:
             pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
             for secondary in pool:
                 f.write(secondary + "\n")
-                f.write(secondary + "-Alternate\n")
+                f.write(secondary + " - Alternate\n")
+        with out_file_alt.open("w", encoding="utf-8") as f:
+            pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
+            for secondary in pool:
+                f.write(secondary + "\n")
+                f.write(secondary + " - Alternate\n")
     
-    print(f"Created {len(CLAN_POOL)} files for tracking secondary clans")
+    print(f"Created {len(CLAN_POOL)*2} files for tracking secondary clans")
 
 def main():
     parser = argparse.ArgumentParser(prog="randomizer", description="Monster Train 2 Clan Randomizer")
