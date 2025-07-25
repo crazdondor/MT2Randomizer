@@ -23,6 +23,7 @@ def handle_randomize_clan(args):
     # if no clan provided, pick a random primary
     if not args.primary_clan:
         primary_clan = random.choice(CLAN_POOL)
+        print(f"Primary clan chosen: {primary_clan}")
     else:
         primary_clan = args.primary_clan
 
@@ -47,7 +48,7 @@ def handle_init(args):
     # create each clan file
     for clan in CLAN_POOL:
         out_file = out_dir / f"{clan}_pool.txt"
-        out_file_alt = out_dir / f"{clan}_Alternate_pool.txt"
+        out_file_alt = out_dir / f"{clan} Alternate_pool.txt"
         with out_file.open("w", encoding="utf-8") as f:
             pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
             for secondary in pool:
@@ -57,7 +58,7 @@ def handle_init(args):
             pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
             for secondary in pool:
                 f.write(secondary + "\n")
-                f.write(secondary + " - Alternate\n")
+                f.write(secondary + " Alternate\n")
     
     print(f"Created {len(CLAN_POOL)*2} files for tracking secondary clans")
 
