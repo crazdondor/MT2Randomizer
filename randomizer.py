@@ -27,11 +27,12 @@ def handle_randomize_clan(args):
     file = out_dir / f"{primary_clan}_pool.txt"
     with open(file, "r", encoding="utf-8") as f:
         pool = [line.strip() for line in f]
+    cleaned = [clan for clan in pool if not clan.endswith("(Done)")]
 
-    if not pool:
+    if not cleaned:
         print("No valid secondary clans")
         sys.exit(1)
-    secondary = random.choice(pool)
+    secondary = random.choice(cleaned)
     print(f"Your combo: {primary_clan} + {secondary}")
 
 def handle_init(args):
