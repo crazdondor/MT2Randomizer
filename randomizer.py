@@ -93,20 +93,20 @@ def main():
 
     randomize_parser = subparsers.add_parser("randomize", help="Randomly choose a secondary clan")
     randomize_parser.add_argument(
-        "--primary-clan",
+        "-p", "--primary-clan",
         required=True,
-        help="Specify the primary clan (will be excluded from pool)"
+        help="Specify the primary clan"
     )
     randomize_parser.set_defaults(func=handle_randomize_clan)
 
     mark_done = subparsers.add_parser("mark", help="Mark a clan combo as completed")
     mark_done.add_argument(
-        "--primary-clan",
+        "-p", "--primary-clan",
         required=True,
         help="Specify primary clan in combo"
     )
     mark_done.add_argument(
-        "--secondary-clan",
+        "-s", "--secondary-clan",
         required=True,
         help="Specify secondary clan in combo"
     )
