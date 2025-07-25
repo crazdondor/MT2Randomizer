@@ -12,12 +12,12 @@ If confused about what each clan should look like, just copy from each file
 
 ### Init
 Creates files for tracking all possible clan combinations
-example:
+#### Example
 python .\randomizer.py init
 
 ### Randomize
 Randomizes based on specified primary clan or full random
-examples:
+#### Examples
 python .\randomizer.py randomize -p "Lazarus League"
 python .\randomizer.py randomize
 #### Arguments
@@ -26,7 +26,7 @@ Not required. Specifies primary clan
 
 ### Mark
 Marks a clan combination as done. Excludes it from randomization
-example:
+#### Example
 python .\randomizer.py mark -p "Pyreborne" -s "Luna Coven Alternate"
 #### Arguments
 ##### --primary-clan OR -p
