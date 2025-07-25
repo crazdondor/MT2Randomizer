@@ -20,7 +20,11 @@ CLAN_POOL = [
 
 def handle_randomize_clan(args):
     # Pick a random secondary clan
-    primary_clan = args.primary_clan
+    # if no clan provided, pick a random primary
+    if not args.primary_clan:
+        primary_clan = random.choice(CLAN_POOL)
+    else:
+        primary_clan = args.primary_clan
 
     # select clan pool file
     out_dir = Path("mt2_randomizer_data")
@@ -94,7 +98,7 @@ def main():
     randomize_parser = subparsers.add_parser("randomize", help="Randomly choose a secondary clan")
     randomize_parser.add_argument(
         "-p", "--primary-clan",
-        required=True,
+        required=False,
         help="Specify the primary clan"
     )
     randomize_parser.set_defaults(func=handle_randomize_clan)
