@@ -53,7 +53,7 @@ def handle_init(args):
             pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
             for secondary in pool:
                 f.write(secondary + "\n")
-                f.write(secondary + " - Alternate\n")
+                f.write(secondary + " Alternate\n")
         with out_file_alt.open("w", encoding="utf-8") as f:
             pool = [clan2 for clan2 in CLAN_POOL if clan2 != clan]
             for secondary in pool:
