@@ -5,6 +5,7 @@ I made this because I prefer playing with random clan combos, but I still want t
 
 ## Usage
 
+Requires python3
 Run init command first or the tracking and randomizing won't work
 All arguments should be wrapped in quotes
 If confused about what each clan should look like, just copy from each file
